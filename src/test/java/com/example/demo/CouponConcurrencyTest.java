@@ -18,20 +18,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * 동시성 PoC 테스트
  * - 사전 조건: 애플리케이션이 localhost:8080 에서 실행 중이어야 합니다.
- * - 쿠폰 ID 1번 (재고 100개, 가격 10000)에 200명이 동시에 발급 요청
- * - 회원 200명 중 10명(member10, 30, 50 ... 190)은 포인트 9000 → 포인트 부족으로 실패
- * - 기대 결과: 정확히 100건만 성공 (재고 초과 방지, 포인트 부족 실패 포함)
+ * - 쿠폰 ID 1번 (재고 300개, 가격 10000)에 500명이 동시에 발급 요청
+ * - 회원 500명 중 25명(member10, 30, 50 ... 490)은 포인트 9000 → 포인트 부족으로 실패
+ * - 기대 결과: 정확히 300건만 성공 (재고 초과 방지, 포인트 부족 실패 포함)
  */
 class CouponConcurrencyTest {
 
     private static final String BASE_URL = "http://localhost:8080";
-    private static final int TOTAL_MEMBERS = 200;
-    private static final int COUPON_STOCK = 100;
-    private static final int INSUFFICIENT_POINT_MEMBERS = 10; // 포인트 부족 회원 수
+    private static final int TOTAL_MEMBERS = 500;
+    private static final int COUPON_STOCK = 300;
+    private static final int INSUFFICIENT_POINT_MEMBERS = 25; // 포인트 부족 회원 수
     private static final long COUPON_ID = 1L;
 
     @Test
-    @DisplayName("200명 동시 쿠폰 발급 요청 시 재고(100개)만큼만 성공해야 한다 (포인트 부족 10명 포함)")
+    @DisplayName("500명 동시 쿠폰 발급 요청 시 재고(300개)만큼만 성공해야 한다 (포인트 부족 25명 포함)")
     void concurrentCouponIssue() throws InterruptedException {
         HttpClient httpClient = HttpClient.newBuilder()
                 .version(HttpClient.Version.HTTP_1_1)
