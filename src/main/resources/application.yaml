@@ -5,9 +5,9 @@ spring:
     username: sa
     password:
     hikari:
-      maximum-pool-size: 50
-      minimum-idle: 50
-      connection-timeout: 28000  # 재시도 윈도우(25초) 내 커넥션 대기
+      maximum-pool-size: 20
+      minimum-idle: 20
+      connection-timeout: 5000  # 재시도 윈도우(25초) 내 커넥션 대기
   jpa:
     hibernate:
       ddl-auto: create-drop
